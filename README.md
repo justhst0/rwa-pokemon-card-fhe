@@ -8,104 +8,73 @@ A decentralized application (DApp) that enables **confidential ownership** of NF
 
 - [Overview](#overview)
 - [Key Features](#key-features)
-- [Advantages](#advantages)
 - [Technology Stack](#technology-stack)
 - [Problem Statement](#problem-statement)
 - [Solution Architecture](#solution-architecture)
 - [Smart Contract Design](#smart-contract-design)
+- [System Architecture Diagrams](#system-architecture-diagrams)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Environment Setup](#environment-setup)
-  - [Compilation](#compilation)
-  - [Deployment](#deployment)
-  - [Running the Frontend](#running-the-frontend)
 - [Usage Guide](#usage-guide)
-  - [Minting Cards](#minting-cards)
-  - [Viewing Cards](#viewing-cards)
-  - [Transferring Cards](#transferring-cards)
 - [Project Structure](#project-structure)
 - [Technical Deep Dive](#technical-deep-dive)
-  - [FHE Integration](#fhe-integration)
-  - [Encrypted Owner Management](#encrypted-owner-management)
-  - [Access Control](#access-control)
-- [Future Roadmap](#future-roadmap)
 - [Security Considerations](#security-considerations)
 - [Contributing](#contributing)
 - [License](#license)
-- [Acknowledgments](#acknowledgments)
 
 ---
 
 ## Overview
 
-**RWA Pokemon Cards** is a pioneering blockchain project that combines the popular concept of collectible Pokemon cards with cutting-edge cryptographic technology. Built on the Ethereum Sepolia testnet using Zama's fhEVM (Fully Homomorphic Encryption Virtual Machine), this project enables users to:
+**RWA Pokemon Cards** is a blockchain project that combines collectible Pokemon cards with advanced cryptographic technology. Built on the Ethereum Sepolia testnet using Zama's fhEVM (Fully Homomorphic Encryption Virtual Machine), this project enables users to:
 
-- **Mint** NFT Pokemon cards with encrypted ownership information
-- **View** card metadata and images while keeping ownership private
-- **Transfer** cards securely using FHE-encrypted proofs
+- Mint NFT Pokemon cards with encrypted ownership information
+- View card metadata and images while keeping ownership private
+- Transfer cards securely using FHE-encrypted proofs
 
 Unlike traditional NFTs where ownership is publicly visible on-chain, this implementation **encrypts the true owner's address** while maintaining the ability to perform operations like transfers and verification.
+
+**Contract Address (Sepolia):** `0x9A7f421c6b3B1ee2BBd02E932532B6956FD36cd3`
 
 ---
 
 ## Key Features
 
-### 1. **Confidential Ownership**
+### 1. Confidential Ownership
+
 The actual owner of each Pokemon card is stored as an encrypted address (`eaddress`) on-chain. This means:
 - Public observers can see that a card exists and who holds the token
 - Only authorized parties can decrypt and verify the true encrypted owner
 - Privacy is maintained while preserving blockchain transparency
 
-### 2. **FHE-Powered Transfers**
+### 2. FHE-Powered Transfers
+
 Card transfers use Fully Homomorphic Encryption to:
 - Verify ownership without decrypting sensitive data
 - Allow transfers only when the caller has proper access control permissions
 - Update encrypted owner information atomically during transfers
 
-### 3. **ERC721 Compliance**
+### 3. ERC721 Compliance
+
 Built on OpenZeppelin's battle-tested ERC721 standard with extensions:
 - **ERC721Enumerable**: Track total supply and enumerate tokens
 - **ERC721URIStorage**: Store metadata URIs for each card
 - Full compatibility with existing NFT marketplaces and wallets
 
-### 4. **Modern Web3 Frontend**
+### 4. Modern Web3 Frontend
+
 React-based UI with:
-- **RainbowKit** wallet connection (supports MetaMask, WalletConnect, Coinbase, etc.)
-- **Wagmi** hooks for blockchain interactions
-- **Zama SDK** client-side encryption
+- RainbowKit wallet connection (supports MetaMask, WalletConnect, Coinbase, etc.)
+- Wagmi hooks for blockchain interactions
+- Zama SDK client-side encryption
 - Real-time transaction feedback with Etherscan links
 - Responsive design with custom CSS styling
 
-### 5. **Developer-Friendly**
+### 5. Developer-Friendly
+
 - Hardhat development environment
 - TypeScript support throughout
 - Comprehensive deployment scripts
 - Easy testnet deployment to Sepolia
-
----
-
-## Advantages
-
-### Privacy Preservation
-- **Hidden Ownership**: True owners remain confidential, protecting high-value asset holders from targeted attacks
-- **Selective Disclosure**: Owners can prove ownership only to authorized parties
-- **Competitive Advantage**: Collectors can maintain private portfolios without revealing their holdings
-
-### Enhanced Security
-- **FHE-Based Access Control**: Leverages homomorphic encryption for cryptographically secure permission checks
-- **No Trusted Third Parties**: Encryption happens client-side; no centralized key management
-- **Audit Trail**: All transactions are on-chain and verifiable while maintaining privacy
-
-### Regulatory Compliance
-- **KYC/AML Ready**: Can integrate with compliance systems while protecting user privacy
-- **GDPR Alignment**: Encrypted PII (Personally Identifiable Information) reduces data protection risks
-- **Flexible Disclosure**: Can implement regulatory reporting without public exposure
-
-### Innovation Showcase
-- **FHE Pioneering**: Demonstrates practical use of advanced cryptography in real-world applications
-- **RWA Integration**: Blueprint for tokenizing physical assets with privacy requirements
-- **Scalable Pattern**: Architecture can be adapted for various confidential asset classes
 
 ---
 
@@ -115,17 +84,10 @@ React-based UI with:
 - **Solidity ^0.8.24**: Smart contract programming language
 - **Zama fhEVM**: Fully Homomorphic Encryption Virtual Machine for confidential smart contracts
 - **OpenZeppelin Contracts**: Secure, audited smart contract libraries
-  - ERC721: NFT standard implementation
-  - ERC721Enumerable: Token enumeration extension
-  - ERC721URIStorage: Token metadata management
 - **Ethereum Sepolia**: Testnet deployment for development and testing
 
 ### Development Tools
 - **Hardhat 2.26.0**: Ethereum development environment
-  - Local blockchain simulation
-  - Contract compilation and testing
-  - Deployment management with hardhat-deploy
-  - Network forking capabilities
 - **TypeScript 5.8.3**: Static typing for contracts and scripts
 - **TypeChain**: TypeScript bindings for smart contracts
 - **Ethers.js 6.15.0**: Ethereum library for blockchain interactions
@@ -139,20 +101,6 @@ React-based UI with:
 - **Zama Relayer SDK 0.2.0**: Client-side FHE operations
 - **Ethers.js 6.15.0**: Contract interaction layer
 - **Viem 2.37.6**: TypeScript Ethereum utilities
-
-### Testing & Quality
-- **Mocha**: JavaScript test framework
-- **Chai**: Assertion library with promise support
-- **Solhint**: Solidity linter for best practices
-- **ESLint**: TypeScript/JavaScript linting
-- **Prettier**: Code formatting
-- **Solidity Coverage**: Test coverage reporting
-
-### DevOps & Deployment
-- **Hardhat Deploy**: Declarative deployment system
-- **Hardhat Verify**: Etherscan contract verification
-- **Netlify**: Frontend hosting and deployment
-- **GitHub Actions**: CI/CD automation (configurable)
 
 ---
 
@@ -179,13 +127,6 @@ React-based UI with:
 - "Whale watching" can manipulate markets when large holders' movements are visible
 - Front-running opportunities arise from transparent order books
 - Strategic collecting becomes impossible when all positions are public
-
-### Why Existing Solutions Fall Short
-
-- **Off-chain privacy**: Centralized databases defeat blockchain's trustless nature
-- **Layer 2 privacy**: Adds complexity and reduces composability
-- **Zero-knowledge proofs**: Limited to specific use cases, not general computation
-- **Private blockchains**: Sacrifice decentralization and public verifiability
 
 ---
 
@@ -260,7 +201,8 @@ uint256 private _idCounter;
 
 ### Critical Functions
 
-#### **1. mintCard()**
+#### 1. mintCard()
+
 Mints a new Pokemon card with encrypted ownership:
 
 ```solidity
@@ -271,14 +213,8 @@ function mintCard(
 ) external returns (uint256)
 ```
 
-**Process:**
-1. Import encrypted address from client-side encryption
-2. Mint ERC721 token to `msg.sender` (public holder)
-3. Store encrypted owner in `_encryptedOwner` mapping
-4. Set up access control list (ACL) for decryption permissions
-5. Emit `CardMinted` event
+#### 2. transfer()
 
-#### **2. transfer()**
 Confidential transfer requiring FHE proof of ownership:
 
 ```solidity
@@ -291,15 +227,8 @@ function transfer(
 ) external
 ```
 
-**Security Checks:**
-1. Verify token exists
-2. Check caller has ACL permission on stored encrypted owner
-3. Verify caller can access the provided encrypted current owner
-4. Transfer public ERC721 ownership
-5. Update encrypted owner to new recipient
-6. Update ACL for new owner
+#### 3. getEncryptedOwner()
 
-#### **3. getEncryptedOwner()**
 Returns the encrypted owner (only decryptable by authorized parties):
 
 ```solidity
@@ -309,25 +238,171 @@ function getEncryptedOwner(uint256 tokenId)
     returns (eaddress)
 ```
 
-### Access Control with FHE ACL
+---
 
-Zama's fhEVM provides built-in **Access Control Lists (ACL)** for encrypted data:
+## System Architecture Diagrams
 
-```solidity
-// Grant contract itself permission to use encrypted data
-FHE.allowThis(encryptedAddress);
+### Mint Flow
 
-// Grant specific address permission to decrypt
-FHE.allow(encryptedAddress, ownerAddress);
-
-// Check if caller has permission
-FHE.isSenderAllowed(encryptedAddress);
+```
+┌──────────────┐
+│   User       │
+│  (Browser)   │
+└──────┬───────┘
+       │
+       │ 1. Enter tokenURI & recipient address
+       │
+       ▼
+┌─────────────────────────────────────┐
+│     Zama SDK (Client-Side)            │
+│  ┌───────────────────────────────┐   │
+│  │ - Generate FHE public key     │   │
+│  │ - Encrypt recipient address   │   │
+│  │ - Create zero-knowledge proof │   │
+│  └───────────┬───────────────────┘   │
+└──────────────┼───────────────────────┘
+               │
+               │ 2. encryptedData + proof
+               │
+               ▼
+┌─────────────────────────────────────┐
+│    Smart Contract (RWAPokemonCards)  │
+│  ┌───────────────────────────────┐   │
+│  │ 1. FHE.fromExternal()          │   │
+│  │    → Verify proof              │   │
+│  │    → Import encrypted address  │   │
+│  │                                 │   │
+│  │ 2. Mint ERC721 token            │   │
+│  │    → _safeMint(msg.sender)     │   │
+│  │    → _setTokenURI(tokenUri)    │   │
+│  │                                 │   │
+│  │ 3. Store encrypted owner        │   │
+│  │    → _encryptedOwner[tokenId]  │   │
+│  │                                 │   │
+│  │ 4. Set up ACL                   │   │
+│  │    → FHE.allowThis()           │   │
+│  │    → FHE.allow(msg.sender)     │   │
+│  │                                 │   │
+│  │ 5. Emit CardMinted event       │   │
+│  └───────────────────────────────┘   │
+└───────────────────────────────────────┘
+       │
+       │ 3. Return tokenId
+       │
+       ▼
+┌──────────────┐
+│   Success    │
+│  Token Minted│
+└──────────────┘
 ```
 
-This creates a trustless permission system where:
-- Only authorized addresses can decrypt sensitive data
-- Permissions are cryptographically enforced by fhEVM
-- No centralized key management required
+### Transfer Flow
+
+```
+┌──────────────┐
+│   Owner      │
+│  (Browser)   │
+└──────┬───────┘
+       │
+       │ 1. Enter tokenId & recipient address
+       │
+       ▼
+┌─────────────────────────────────────┐
+│     Zama SDK (Client-Side)            │
+│  ┌───────────────────────────────┐   │
+│  │ - Encrypt current owner        │   │
+│  │ - Encrypt new owner            │   │
+│  │ - Create zero-knowledge proof  │   │
+│  └───────────┬───────────────────┘   │
+└──────────────┼───────────────────────┘
+               │
+               │ 2. encryptedCurrentOwner + 
+               │    encryptedTo + proof
+               │
+               ▼
+┌─────────────────────────────────────┐
+│    Smart Contract (RWAPokemonCards)  │
+│  ┌───────────────────────────────┐   │
+│  │ 1. Import encrypted addresses │   │
+│  │    → FHE.fromExternal()       │   │
+│  │                                 │   │
+│  │ 2. Verify permissions          │   │
+│  │    → FHE.isSenderAllowed(      │   │
+│  │       _encryptedOwner[tokenId])│   │
+│  │    → FHE.isSenderAllowed(      │   │
+│  │       encryptedCurrentOwner)   │   │
+│  │    → Revert if unauthorized    │   │
+│  │                                 │   │
+│  │ 3. Transfer public ERC721      │   │
+│  │    → transferFrom(owner, to)   │   │
+│  │                                 │   │
+│  │ 4. Update encrypted owner      │   │
+│  │    → _encryptedOwner = toEnc   │   │
+│  │    → FHE.allowThis(toEnc)      │   │
+│  │    → FHE.allow(toEnc, to)      │   │
+│  └───────────────────────────────┘   │
+└───────────────────────────────────────┘
+       │
+       │ 3. Transaction confirmed
+       │
+       ▼
+┌──────────────┐
+│   Success    │
+│  Card Transfer│
+└──────────────┘
+```
+
+### Access Control List (ACL) System
+
+```
+┌─────────────────────────────────────────────────┐
+│         Encrypted Data (eaddress)                │
+│                                                  │
+│  ┌──────────────────────────────────────────┐ │
+│  │         Access Control List (ACL)          │ │
+│  │                                            │ │
+│  │  ┌──────────────┐  ┌──────────────┐      │ │
+│  │  │ Contract     │  │ Owner        │      │ │
+│  │  │ (allowThis)  │  │ (allow)      │      │ │
+│  │  └──────────────┘  └──────────────┘      │ │
+│  │                                            │ │
+│  │  Permissions:                              │ │
+│  │  - Contract can compute on encrypted data  │ │
+│  │  - Owner can decrypt the encrypted value   │ │
+│  │  - Other addresses: NO ACCESS              │ │
+│  └──────────────────────────────────────────┘ │
+│                                                  │
+│  Cryptographic Enforcement by fhEVM:             │
+│  - No centralized key management                │
+│  - Cannot be bypassed                          │
+│  - Independent ACL per encrypted value          │
+└─────────────────────────────────────────────────┘
+```
+
+### Data Flow: Public vs Encrypted State
+
+```
+┌──────────────────────────────────────────────────────┐
+│            On-Chain State Storage                      │
+│                                                        │
+│  ┌────────────────────┐  ┌──────────────────────┐  │
+│  │   Public State     │  │  Encrypted State      │  │
+│  │                    │  │                       │  │
+│  │  Token ID: #1      │  │  eaddress: 0x***...  │  │
+│  │  Public Owner:     │  │  (Encrypted)          │  │
+│  │  0xABC...          │  │                       │  │
+│  │                    │  │  ACL:                 │  │
+│  │  Token URI:        │  │  - Contract: ✓        │  │
+│  │  ipfs://...        │  │  - Owner: ✓           │  │
+│  │                    │  │  - Others: ✗          │  │
+│  │  Visible to:       │  │                       │  │
+│  │  Everyone          │  │  Decryptable by:      │  │
+│  │                    │  │  - Authorized only    │  │
+│  └────────────────────┘  └──────────────────────┘  │
+│                                                        │
+│  Both states updated atomically in transfer()         │
+└──────────────────────────────────────────────────────┘
+```
 
 ---
 
@@ -345,17 +420,20 @@ Ensure you have the following installed:
 ### Installation
 
 1. **Clone the repository:**
+
 ```bash
-git clone https://github.com/your-username/RWAPokemonCards.git
+git clone <repository-url>
 cd RWAPokemonCards
 ```
 
 2. **Install smart contract dependencies:**
+
 ```bash
 npm install
 ```
 
 3. **Install frontend dependencies:**
+
 ```bash
 cd home
 npm install
@@ -416,7 +494,7 @@ npm run deploy:sepolia
 npm run verify:sepolia
 ```
 
-The deployment script will output the contract address. **Save this address** for frontend configuration.
+The deployment script will output the contract address. The deployed contract address is: `0x9A7f421c6b3B1ee2BBd02E932532B6956FD36cd3`
 
 #### Deploy to Local Hardhat Network
 
@@ -434,9 +512,10 @@ npm run deploy:localhost
 
 1. **Configure contract address:**
 
-Edit `home/src/config/contracts.ts`:
+The contract address is already configured in `home/src/config/contracts.ts`:
+
 ```typescript
-export const CONTRACT_ADDRESS = '0xYourDeployedContractAddress';
+export const CONTRACT_ADDRESS = '0x9A7f421c6b3B1ee2BBd02E932532B6956FD36cd3' as `0x${string}`;
 ```
 
 2. **Start the development server:**
@@ -485,7 +564,7 @@ Open browser to `http://localhost:5173`
    - **Total Supply**: Number of cards minted
    - **Public Owner**: Wallet holding the token
    - **Card Image**: Displayed from Token URI
-   - **Encrypted Owner**: Shown as `***` (encrypted on-chain)
+   - **Encrypted Owner**: Shown as encrypted (encrypted on-chain)
 
 **Privacy Note:** Only addresses with ACL permissions can decrypt the true owner.
 
@@ -523,7 +602,8 @@ RWAPokemonCards/
 │   └── deploy.ts                # RWAPokemonCards deployment
 │
 ├── test/                         # Smart contract tests
-│   └── RWAPokemonCards.test.ts  # Test suite (to be implemented)
+│   ├── FHECounter.ts            # FHE counter tests
+│   └── FHECounterSepolia.ts     # Sepolia network tests
 │
 ├── tasks/                        # Hardhat custom tasks
 │   ├── accounts.ts              # Display account balances
@@ -532,22 +612,24 @@ RWAPokemonCards/
 ├── home/                         # React frontend application
 │   ├── src/
 │   │   ├── components/
-│   │   │   └── PokemonApp.tsx   # Main UI component
+│   │   │   ├── Header.tsx       # Header component
+│   │   │   └── PokemonApp.tsx  # Main UI component
 │   │   ├── config/
-│   │   │   └── contracts.ts     # Contract address & ABI
+│   │   │   ├── contracts.ts     # Contract address & ABI
+│   │   │   └── wagmi.ts         # Wagmi configuration
 │   │   ├── hooks/
 │   │   │   ├── useZamaInstance.ts    # Zama SDK initialization
 │   │   │   └── useEthersSigner.ts    # Ethers signer hook
 │   │   ├── styles/
-│   │   │   └── PokemonApp.css   # Custom styling
+│   │   │   ├── Header.css       # Header styles
+│   │   │   └── PokemonApp.css   # App styles
 │   │   ├── App.tsx              # Root component
 │   │   └── main.tsx             # Application entry point
 │   │
 │   ├── public/                  # Static assets
 │   ├── package.json             # Frontend dependencies
 │   ├── vite.config.ts           # Vite configuration
-│   ├── tsconfig.json            # TypeScript config
-│   └── netlify.toml             # Netlify deployment config
+│   └── tsconfig.json            # TypeScript config
 │
 ├── artifacts/                    # Compiled contract artifacts
 ├── cache/                        # Hardhat cache
@@ -629,7 +711,7 @@ euint32 product = FHE.mul(encryptedNum1, encryptedNum2); // Multiplication
 
 ### Encrypted Owner Management
 
-#### Mint Flow
+#### Mint Flow Implementation
 
 ```solidity
 function mintCard(
@@ -657,7 +739,7 @@ function mintCard(
 }
 ```
 
-#### Transfer Flow
+#### Transfer Flow Implementation
 
 ```solidity
 function transfer(
@@ -727,61 +809,14 @@ Transfer:
 
 ---
 
-## Future Roadmap
-
-### Phase 1: Enhanced Privacy Features (Q2 2025)
-- [ ] **Encrypted Attributes**: Store Pokemon stats (HP, Attack, Defense) as encrypted values
-- [ ] **Private Trading**: Implement encrypted bid/ask marketplace
-- [ ] **Confidential Rarity**: Hide card rarity tiers from public view
-- [ ] **Batch Operations**: Mint/transfer multiple cards in one transaction
-- [ ] **Metadata Encryption**: Encrypt token URIs for complete privacy
-
-### Phase 2: Advanced Functionality (Q3 2025)
-- [ ] **Confidential Auctions**: Dutch auctions with hidden current prices
-- [ ] **Encrypted Ownership Proofs**: Generate ZK proofs of ownership without revealing identity
-- [ ] **Time-Locked Transfers**: Schedule transfers with encrypted unlock times
-- [ ] **Multi-Signature Encrypted Ownership**: Require multiple signatures for transfers
-- [ ] **Delegated Permissions**: Allow temporary access without ownership transfer
-
-### Phase 3: Gaming & Utility (Q4 2025)
-- [ ] **Battle System**: Use encrypted stats in on-chain Pokemon battles
-- [ ] **Breeding Mechanics**: Combine cards to create new ones with inherited encrypted traits
-- [ ] **Staking & Rewards**: Earn tokens by staking cards (encrypted staking amounts)
-- [ ] **Tournament System**: Compete with encrypted deck compositions
-- [ ] **Achievement System**: Track progress with encrypted milestones
-
-### Phase 4: Ecosystem Expansion (2026)
-- [ ] **Multi-Chain Deployment**: Bridge to Polygon, Arbitrum, Optimism
-- [ ] **Mainnet Launch**: Deploy to Ethereum mainnet with Zama fhEVM
-- [ ] **DAO Governance**: Community-driven development with encrypted voting
-- [ ] **API & SDK**: Developer tools for building on top of the platform
-- [ ] **Mobile App**: Native iOS/Android applications
-- [ ] **Physical Integration**: NFC-enabled physical cards linked to NFTs
-
-### Phase 5: Enterprise & Compliance (2026+)
-- [ ] **KYC/AML Integration**: Compliance layer with privacy preservation
-- [ ] **Institutional Custody**: Support for custodial wallets with encrypted beneficiaries
-- [ ] **Regulatory Reporting**: Selective disclosure for regulators
-- [ ] **Insurance Products**: Underwriting based on encrypted asset portfolios
-- [ ] **Fractional Ownership**: Encrypted share distribution for high-value cards
-
-### Research & Development
-- [ ] **FHE Performance Optimization**: Reduce gas costs for encrypted operations
-- [ ] **Advanced ZK Proofs**: Combine ZK-SNARKs with FHE for efficiency
-- [ ] **Quantum Resistance**: Ensure long-term security against quantum attacks
-- [ ] **Decentralized FHE Networks**: Distributed key generation and management
-- [ ] **Cross-Chain FHE**: Interoperability between different FHE blockchains
-
----
-
 ## Security Considerations
 
 ### Smart Contract Security
 
 **Audits:**
-- [ ] **Pending external audit** by reputable security firm
 - Uses audited OpenZeppelin contracts as base
 - fhEVM libraries are provided by Zama (security-focused)
+- External audit pending
 
 **Known Considerations:**
 1. **ACL Permissions**: Always verify `FHE.isSenderAllowed()` before transfers
@@ -804,10 +839,10 @@ Transfer:
 - **Post-Quantum Security**: FHE schemes resist quantum computer attacks
 
 **Threat Model:**
-- ✅ Protected against: Public observation, data scraping, front-running
-- ✅ Protected against: Contract exploitation (data remains encrypted)
-- ⚠️ Limited protection: Side-channel attacks (gas analysis, timing)
-- ⚠️ Limited protection: Network-level observation (encrypted payloads visible)
+- Protected against: Public observation, data scraping, front-running
+- Protected against: Contract exploitation (data remains encrypted)
+- Limited protection: Side-channel attacks (gas analysis, timing)
+- Limited protection: Network-level observation (encrypted payloads visible)
 
 ### Client-Side Security
 
@@ -837,18 +872,6 @@ Transfer:
 - Use multi-signature wallets for contract ownership
 - Implement time-locks for sensitive operations
 
-### Responsible Disclosure
-
-Found a security issue? Please report responsibly:
-- **Email**: security@example.com (replace with actual contact)
-- **Encrypted**: PGP key available on request
-- **Bounty**: Bug bounty program details (TBD)
-
-**Please do not:**
-- Disclose publicly before we've addressed the issue
-- Exploit vulnerabilities on mainnet
-- Test attacks on production systems
-
 ---
 
 ## Contributing
@@ -858,9 +881,6 @@ We welcome contributions from the community! Here's how to get involved:
 ### Development Workflow
 
 1. **Fork the repository**
-```bash
-git fork https://github.com/your-username/RWAPokemonCards.git
-```
 
 2. **Create a feature branch**
 ```bash
@@ -868,9 +888,9 @@ git checkout -b feature/amazing-new-feature
 ```
 
 3. **Make your changes**
-- Write clean, documented code
-- Follow existing code style
-- Add tests for new functionality
+   - Write clean, documented code
+   - Follow existing code style
+   - Add tests for new functionality
 
 4. **Run tests and linting**
 ```bash
@@ -885,9 +905,6 @@ git commit -m "feat: add encrypted card attributes"
 ```
 
 6. **Push and create pull request**
-```bash
-git push origin feature/amazing-new-feature
-```
 
 ### Contribution Guidelines
 
@@ -910,33 +927,6 @@ git push origin feature/amazing-new-feature
 - Update README for new features
 - Add inline comments for complex logic
 - Create docs/ entries for major additions
-
-### Areas for Contribution
-
-**Smart Contracts:**
-- Additional encrypted attributes
-- Gas optimization
-- New NFT standards (ERC-1155, etc.)
-
-**Frontend:**
-- UI/UX improvements
-- Mobile responsiveness
-- Accessibility features
-
-**Testing:**
-- Unit test coverage
-- Integration test scenarios
-- Fuzzing and edge cases
-
-**Documentation:**
-- Tutorial videos
-- Developer guides
-- Architecture diagrams
-
-**Community:**
-- Discord bot integration
-- Translation to other languages
-- Community forum moderation
 
 ---
 
@@ -990,93 +980,8 @@ THIS LICENSE.
 - **Tornado Cash**: Privacy-preserving protocols on Ethereum
 - **Aztec Protocol**: ZK-rollup privacy solutions
 
-### Community
-- **fhEVM Discord**: For technical support and discussions
-- **Ethereum Developers**: For continuous innovation in blockchain technology
-- **Open Source Contributors**: For making decentralized development possible
-
-### Special Thanks
-- Beta testers who provided invaluable feedback
-- Security researchers who responsibly disclosed vulnerabilities
-- Community members who contributed code, docs, and ideas
-
 ---
 
-## Contact & Resources
-
-### Project Links
-- **GitHub**: https://github.com/your-username/RWAPokemonCards
-- **Live Demo**: https://rwa-pokemon-cards.netlify.app (update with actual URL)
-- **Documentation**: https://docs.rwa-pokemon-cards.com (if applicable)
-- **Discord**: https://discord.gg/your-invite (community server)
-
-### Developer Resources
-- **Zama fhEVM Docs**: https://docs.zama.ai/fhevm
-- **Hardhat Documentation**: https://hardhat.org/docs
-- **OpenZeppelin Contracts**: https://docs.openzeppelin.com/contracts
-- **Wagmi Documentation**: https://wagmi.sh/
-- **RainbowKit Docs**: https://www.rainbowkit.com/docs
-
-### Support
-- **Issues**: Report bugs on GitHub Issues
-- **Discussions**: Ask questions in GitHub Discussions
-- **Email**: support@example.com (replace with actual)
-- **Twitter**: @RWAPokemonCards (if applicable)
-
----
-
-## Changelog
-
-### v0.1.0 (Current)
-- Initial release
-- ERC721 NFT with FHE-encrypted ownership
-- Mint, view, and transfer functionality
-- React frontend with RainbowKit
-- Sepolia testnet deployment
-
-### Coming Soon
-- See [Future Roadmap](#future-roadmap) for planned features
-
----
-
-**Built with ❤️ by the RWA Pokemon Cards team**
+**Built with dedication by the RWA Pokemon Cards team**
 
 *Combining the joy of collecting with the power of privacy-preserving blockchain technology.*
-
----
-
-## FAQ
-
-**Q: What is Fully Homomorphic Encryption (FHE)?**
-A: FHE allows computations on encrypted data without decrypting it. This enables blockchain smart contracts to process sensitive information while keeping it confidential.
-
-**Q: Why use Sepolia testnet?**
-A: Zama's fhEVM is currently available on Sepolia for testing. Mainnet deployment will follow after thorough testing and audits.
-
-**Q: Can I use this with regular MetaMask?**
-A: Yes! The DApp works with any standard Ethereum wallet. The encryption happens in your browser via Zama SDK.
-
-**Q: Is the encrypted owner completely private?**
-A: The encrypted owner address is stored on-chain but only decryptable by addresses with ACL permissions. Even blockchain explorers cannot read the plaintext.
-
-**Q: What are the gas costs?**
-A: FHE operations are more expensive than regular EVM operations. Expect higher gas costs compared to traditional NFTs, but Zama is continuously optimizing.
-
-**Q: Can I use this in production?**
-A: This is currently a testnet demo. For production use, wait for mainnet fhEVM launch and complete security audits.
-
-**Q: How do I get Sepolia ETH?**
-A: Use public faucets like https://sepoliafaucet.com/ or https://www.alchemy.com/faucets/ethereum-sepolia
-
-**Q: Where are card images stored?**
-A: Token URIs can point to IPFS, Arweave, or any HTTP-accessible metadata. The contract only stores the URI, not the image itself.
-
-**Q: Can I integrate this with my project?**
-A: Absolutely! The code is open source under BSD-3-Clause-Clear license. Follow contribution guidelines if submitting changes back.
-
-**Q: What happens if I lose my private key?**
-A: Just like any blockchain asset, losing your private key means permanent loss of access. Always back up your keys securely!
-
----
-
-*This README is living documentation and will be updated as the project evolves. Last updated: 2024-12-30*
