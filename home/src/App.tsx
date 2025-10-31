@@ -230,19 +230,6 @@ function App() {
               <PokemonApp tab={tab} />
             </div>
 
-            {/* Footer */}
-            <div style={{
-              textAlign: 'center',
-              padding: '2rem',
-              color: '#5F9EA0',
-              fontSize: '0.875rem',
-              position: 'relative',
-              zIndex: 1
-            }}>
-              <p style={{ margin: 0 }}>
-                Powered by <strong style={{ color: '#4169E1' }}>Zama fhEVM</strong> • Built with love for Web3
-              </p>
-            </div>
           </div>
         </RainbowKitProvider>
       </QueryClientProvider>
