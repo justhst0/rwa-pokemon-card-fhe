@@ -6,21 +6,13 @@ import { useEthersSigner } from '../hooks/useEthersSigner';
 import { Contract, isAddress } from 'ethers';
 import '../styles/PokemonApp.css';
 
-export function PokemonApp() {
-  const [tab, setTab] = useState<'mint' | 'view' | 'transfer'>('mint');
+interface PokemonAppProps {
+  tab: 'mint' | 'view' | 'transfer';
+}
+
+export function PokemonApp({ tab }: PokemonAppProps) {
   return (
     <div className="app-container">
-      <div className="tabs">
-        <button className={`tab ${tab==='mint'?'active':''}`} onClick={()=>setTab('mint')}>
-          ✨ Mint Card
-        </button>
-        <button className={`tab ${tab==='view'?'active':''}`} onClick={()=>setTab('view')}>
-          👁️ View Card
-        </button>
-        <button className={`tab ${tab==='transfer'?'active':''}`} onClick={()=>setTab('transfer')}>
-          🔄 Transfer Card
-        </button>
-      </div>
       {tab==='mint' && <MintCard/>}
       {tab==='view' && <ViewCard/>}
       {tab==='transfer' && <TransferCard/>}
@@ -71,23 +63,23 @@ function MintCard() {
 
   return (
     <div className="card">
-      <h2>✨ Mint New Card</h2>
+      <h2>Mint New Card</h2>
       <form onSubmit={onMint} className="form">
         <label>
-          🔗 Token URI
+          Token URI
           <input value={tokenUri} onChange={e=>setTokenUri(e.target.value)} placeholder="https://ipfs.io/ipfs/..." required/>
         </label>
         <label>
-          🔐 Recipient Address <span style={{fontSize: '0.85em', color: '#6b7280'}}>(Will be encrypted on-chain)</span>
+          Recipient Address <span style={{fontSize: '0.85em', color: '#6b7280'}}>(Will be encrypted on-chain)</span>
           <input value={recipient} onChange={e=>setRecipient(e.target.value)} placeholder="0x..." required/>
         </label>
         <button disabled={submitting || zamaLoading || !address}>
-          {submitting ? '⏳ Minting...' : '🎴 Mint Card'}
+          {submitting ? 'Minting...' : 'Mint Card'}
         </button>
       </form>
       {txHash && (
         <p className="hint">
-          ✅ Transaction successful! <a target="_blank" rel="noreferrer" href={`https://sepolia.etherscan.io/tx/${txHash}`}>View on Etherscan →</a>
+          Transaction successful! <a target="_blank" rel="noreferrer" href={`https://sepolia.etherscan.io/tx/${txHash}`}>View on Etherscan →</a>
         </p>
       )}
     </div>
@@ -129,10 +121,10 @@ function ViewCard() {
 
   return (
     <div className="card">
-      <h2>👁️ View Card</h2>
+      <h2>View Card</h2>
       <div className="form">
         <label>
-          🎯 Token ID
+          Token ID
           <input
             type="number"
             value={tokenId}
@@ -143,7 +135,7 @@ function ViewCard() {
         </label>
         {typeof total !== 'undefined' && (
           <p className="hint">
-            📊 Total Supply: <strong>{String(total)}</strong> card{Number(total) === 1 ? '' : 's'} minted
+            Total Supply: <strong>{String(total)}</strong> card{Number(total) === 1 ? '' : 's'} minted
           </p>
         )}
       </div>
@@ -153,9 +145,9 @@ function ViewCard() {
             <img src={tokenUri as string} alt="card" className="preview"/>
           )}
           <div className="meta">
-            <p><strong>👤 Public Owner</strong>{owner as string}</p>
-            <p><strong>🔐 Encrypted Owner</strong>*** (Encrypted on-chain)</p>
-            <p><strong>🎴 Token ID</strong>#{tokenId}</p>
+            <p><strong>Public Owner</strong>{owner as string}</p>
+            <p><strong>Encrypted Owner</strong>*** (Encrypted on-chain)</p>
+            <p><strong>Token ID</strong>#{tokenId}</p>
           </div>
         </div>
       )}
@@ -206,10 +198,10 @@ function TransferCard() {
 
   return (
     <div className="card">
-      <h2>🔄 Transfer Card</h2>
+      <h2>Transfer Card</h2>
       <form onSubmit={onTransfer} className="form">
         <label>
-          🎯 Token ID
+          Token ID
           <input
             type="number"
             value={tokenId}
@@ -220,7 +212,7 @@ function TransferCard() {
           />
         </label>
         <label>
-          📮 Recipient Address
+          Recipient Address
           <input
             value={to}
             onChange={e=>setTo(e.target.value)}
@@ -229,12 +221,12 @@ function TransferCard() {
           />
         </label>
         <button disabled={submitting || zamaLoading || !address}>
-          {submitting ? '⏳ Transferring...' : '🚀 Transfer Card'}
+          {submitting ? 'Transferring...' : 'Transfer Card'}
         </button>
       </form>
       {txHash && (
         <p className="hint">
-          ✅ Transfer successful! <a target="_blank" rel="noreferrer" href={`https://sepolia.etherscan.io/tx/${txHash}`}>View on Etherscan →</a>
+          Transfer successful! <a target="_blank" rel="noreferrer" href={`https://sepolia.etherscan.io/tx/${txHash}`}>View on Etherscan →</a>
         </p>
       )}
     </div>

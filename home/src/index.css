@@ -49,3 +49,88 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #5568d3, #653a8b);
 }
+
+/* Animated Gradient Background - Smooth and Slow */
+@keyframes gradientWave {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.35;
+  }
+  25% {
+    transform: translate(2%, 1.5%) scale(1.02);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(2%, 3%) scale(1.04);
+    opacity: 0.45;
+  }
+  75% {
+    transform: translate(-1%, 2%) scale(1.01);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.35;
+  }
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 20% 100%, 100% 80%, 50% 50%, 80% 20%;
+  }
+  25% {
+    background-position: 22% 98%, 98% 82%, 52% 52%, 78% 22%;
+  }
+  50% {
+    background-position: 18% 102%, 102% 78%, 48% 48%, 82% 18%;
+  }
+  75% {
+    background-position: 21% 99%, 99% 81%, 51% 51%, 79% 21%;
+  }
+  100% {
+    background-position: 20% 100%, 100% 80%, 50% 50%, 80% 20%;
+  }
+}
+
+@keyframes grain {
+  0%, 100% {
+    transform: translate(0, 0);
+    opacity: 0.15;
+  }
+  25% {
+    transform: translate(-2%, -3%);
+    opacity: 0.18;
+  }
+  50% {
+    transform: translate(2%, 3%);
+    opacity: 0.2;
+  }
+  75% {
+    transform: translate(-1%, 2%);
+    opacity: 0.17;
+  }
+}
+
+.animated-gradient-bg {
+  /* Slow, smooth movement - 30 seconds for gentle flow */
+  animation: gradientMove 30s ease-in-out infinite;
+}
+
+.animated-gradient-layer {
+  /* Gentle wave effect - 25 seconds for smooth motion */
+  animation: gradientWave 25s ease-in-out infinite;
+}
+
+.grain-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.15;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+  /* Slow grain animation for subtle texture */
+  animation: grain 8s ease-in-out infinite;
+  pointer-events: none;
+}
