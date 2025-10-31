@@ -2,6 +2,8 @@
 
 A decentralized application (DApp) that enables **confidential ownership** of NFT Pokemon cards using **Fully Homomorphic Encryption (FHE)** technology powered by Zama fhEVM.
 
+**Live Demo:** https://rwa-pokemon-card-fhe.vercel.app/
+
 **Contract Address (Sepolia):** `0x9A7f421c6b3B1ee2BBd02E932532B6956FD36cd3`
 
 ---
@@ -25,11 +27,11 @@ This project demonstrates how to tokenize Real World Assets (RWA) with **privacy
 
 ### Key Features
 
-- ✅ **Confidential Ownership**: True owner address is encrypted using FHE
-- ✅ **Dual Ownership Model**: Separate public holder and encrypted beneficial owner
-- ✅ **FHE-Powered Transfers**: Secure transfers with encrypted proof verification
-- ✅ **ERC721 Compliant**: Works with existing NFT marketplaces and wallets
-- ✅ **Modern Web3 Frontend**: React + RainbowKit + Zama SDK
+- **Confidential Ownership**: True owner address is encrypted using FHE
+- **Dual Ownership Model**: Separate public holder and encrypted beneficial owner
+- **FHE-Powered Transfers**: Secure transfers with encrypted proof verification
+- **ERC721 Compliant**: Works with existing NFT marketplaces and wallets
+- **Modern Web3 Frontend**: React + RainbowKit + Zama SDK
 
 ---
 
@@ -69,16 +71,9 @@ This dual model enables powerful use cases:
 
 ### Example Scenario
 
-```
-User A mints a card:
-├─ Public Owner:     User A (0xAAA...)  ← Visible to everyone
-└─ Encrypted Owner:  User B (0xBBB...)  ← Encrypted on-chain
-
-Result:
-- User A holds the token in their wallet (can transfer)
-- User B is the encrypted beneficial owner (private)
-- Only authorized parties can decrypt User B's address
-```
+When User A mints a card with recipient User B:
+- **Public Owner**: User A (0xAAA...) - Visible to everyone, holds the token
+- **Encrypted Owner**: User B (0xBBB...) - Encrypted on-chain, only authorized parties can decrypt
 
 ---
 
@@ -301,21 +296,9 @@ function transfer(
 | `FHE.allow()` | Grant decryption permission | Smart Contract |
 | `FHE.allowThis()` | Grant contract access | Smart Contract |
 
-### What About Decrypt?
+### About Decryption
 
-**Current Implementation:** Decrypt is NOT used in the main application.
-
-- The frontend only encrypts addresses when minting/transferring
-- The encrypted owner is stored but never decrypted for display
-- Only addresses with ACL permissions can decrypt (off-chain), but this is not implemented in the UI
-
-**Why?** This is intentional design - keeping data encrypted ensures privacy. If you need to display decrypted owner for authorized users, you would add:
-
-```typescript
-// Example (not implemented):
-const encOwner = await contract.getEncryptedOwner(tokenId);
-const decryptedOwner = await instance.decryptEAddress(encOwner);
-```
+Decrypt is **not used** in the current implementation. The application only encrypts addresses but does not decrypt them for display. This is intentional to maintain privacy - encrypted data stays encrypted.
 
 ---
 
@@ -347,24 +330,11 @@ rwa-pokemon-card-fhe/
 
 BSD-3-Clause-Clear License
 
-**Built with ❤️ using Zama fhEVM**
+**Built with Zama fhEVM**
 
 ---
 
 ## Quick Reference
 
-### Important Addresses
-
 - **Contract (Sepolia)**: `0x9A7f421c6b3B1ee2BBd02E932532B6956FD36cd3`
 - **Zama fhEVM Docs**: https://docs.zama.ai/fhevm
-
-### Key Differences Summary
-
-| Aspect | Public Owner | Encrypted Owner |
-|--------|--------------|-----------------|
-| **Source** | `ownerOf(tokenId)` | `_encryptedOwner[tokenId]` |
-| **Visibility** | Public | Private (encrypted) |
-| **Mint** | `msg.sender` | `recipient` (encrypted) |
-| **Transfer** | Changes to new holder | Changes to new encrypted owner |
-| **Purpose** | ERC721 ownership | Confidential ownership |
-| **Can Decrypt?** | No (already public) | Yes (if has ACL permission) |
